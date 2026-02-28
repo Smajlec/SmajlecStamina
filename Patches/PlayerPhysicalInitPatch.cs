@@ -15,11 +15,18 @@ internal class PlayerPhysicalInitPatch : ModulePatch
     {
         __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.Sprint].Requires = PlayerPhysicalClass.EConsumptionTarget.None;
         __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.Sprint].Downtime = Plugin.SprintDowntime.Value;
-        
-        __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.Jump].StartThreshold = 0f;
-        __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.VaultLegs].StartThreshold = 0f;
-        __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.ClimbLegs].StartThreshold = 0f;
-        __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.VaultHands].StartThreshold = 0f;
-        __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.ClimbHands].StartThreshold = 0f;
+
+        if (!Plugin.JumpRequireStamina.Value)
+        {
+            __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.Jump].StartThreshold = 0f;
+        }
+
+        if (!Plugin.VaultRequireStamina.Value)
+        {
+            __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.VaultLegs].StartThreshold = 0f;
+            __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.ClimbLegs].StartThreshold = 0f;
+            __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.VaultHands].StartThreshold = 0f;
+            __instance.Consumptions[PlayerPhysicalClass.EConsumptionType.ClimbHands].StartThreshold = 0f;
+        }
     }
 }
