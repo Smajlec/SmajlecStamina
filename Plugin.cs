@@ -8,7 +8,7 @@ using SmajlecStamina.Patches;
 
 namespace SmajlecStamina;
 
-[BepInPlugin("com.smajlec.stamina", "SmajlecStamina", "1.1.0")]
+[BepInPlugin("com.smajlec.stamina", "SmajlecStamina", "1.2.0")]
 public class Plugin : BaseUnityPlugin
 {
     // Config
@@ -34,13 +34,14 @@ public class Plugin : BaseUnityPlugin
         new PlayerPhysicalInitPatch().Enable();
         new PlayerPhysicalSprintPatch().Enable();
         new MovementContextUpdateCharacterControllerSpeedLimitPatch().Enable();
+        new MovementContextSprintAccelerationPatch().Enable();
         new PlayerInitPatch().Enable();
         new PlayerDisposePatch().Enable();
     }
 
     private void Start()
     {
-        JogSpeed = Config.Bind("Main", "Jog Speed", .65f, new ConfigDescription("Running speed when stamina is depleted", new AcceptableValueRange<float>(.55f, 1f), new ConfigurationManagerAttributes
+        JogSpeed = Config.Bind("Main", "Jog Speed", .6f, new ConfigDescription("Running speed when stamina is depleted", new AcceptableValueRange<float>(.55f, 1f), new ConfigurationManagerAttributes
         {
             Order = 1000
         }));
