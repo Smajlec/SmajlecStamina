@@ -8,12 +8,13 @@ using SmajlecStamina.Patches;
 
 namespace SmajlecStamina;
 
-[BepInPlugin("com.smajlec.stamina", "SmajlecStamina", "1.2.0")]
+[BepInPlugin("com.smajlec.stamina", "SmajlecStamina", "1.3.0")]
 public class Plugin : BaseUnityPlugin
 {
     // Config
     public static ConfigEntry<float> JogSpeed { get; set; }
     public static ConfigEntry<float> SprintDowntime { get; set; }
+    public static ConfigEntry<bool> DisableFatigue { get; set; }
     
     public static ConfigEntry<bool> JumpRequireStamina { get; set; }
     public static ConfigEntry<bool> VaultRequireStamina { get; set; }
@@ -37,6 +38,7 @@ public class Plugin : BaseUnityPlugin
         new MovementContextSprintAccelerationPatch().Enable();
         new PlayerInitPatch().Enable();
         new PlayerDisposePatch().Enable();
+        new ActiveHealthControllerAddFatiguePatch().Enable();
     }
 
     private void Start()
@@ -48,6 +50,10 @@ public class Plugin : BaseUnityPlugin
         SprintDowntime = Config.Bind("Main", "Sprint Downtime", .1f, new ConfigDescription("Time needed to start regenerating stamina after sprinting", new AcceptableValueRange<float>(.1f, 1f), new ConfigurationManagerAttributes
         {
             Order = 999
+        }));
+        DisableFatigue = Config.Bind("Main", "Disable Fatigue", false, new ConfigDescription("Disable Fatigue effect when exhausted", tags: new ConfigurationManagerAttributes
+        {
+            Order = 998
         }));
         
         JumpRequireStamina = Config.Bind("Require Stamina", "Jump", false, new ConfigDescription("Require green stamina for jumping", tags: new ConfigurationManagerAttributes
